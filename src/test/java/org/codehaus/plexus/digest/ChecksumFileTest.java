@@ -45,18 +45,23 @@ class ChecksumFileTest
 
         assertTrue( checksum.isValidChecksum( new File( exampleDir, "redback-authz-open.jar.md5" ) ) );
         assertTrue( checksum.isValidChecksum( new File( exampleDir, "redback-authz-open.jar.sha1" ) ) );
+        assertTrue( checksum.isValidChecksum( new File( exampleDir, "redback-authz-open.jar.sha256" ) ) );
 
         assertTrue( checksum.isValidChecksum( new File( exampleDir, "plain.jar.md5" ) ) );
         assertTrue( checksum.isValidChecksum( new File( exampleDir, "plain.jar.sha1" ) ) );
+        assertTrue( checksum.isValidChecksum( new File( exampleDir, "plain.jar.sha256" ) ) );
 
         assertTrue( checksum.isValidChecksum( new File( exampleDir, "single-space.jar.md5" ) ) );
         assertTrue( checksum.isValidChecksum( new File( exampleDir, "single-space.jar.sha1" ) ) );
+        assertTrue( checksum.isValidChecksum( new File( exampleDir, "single-space.jar.sha256" ) ) );
 
         assertTrue( checksum.isValidChecksum( new File( exampleDir, "space-asterisk.jar.md5" ) ) );
         assertTrue( checksum.isValidChecksum( new File( exampleDir, "space-asterisk.jar.sha1" ) ) );
+        assertTrue( checksum.isValidChecksum( new File( exampleDir, "space-asterisk.jar.sha256" ) ) );
 
         assertTrue( checksum.isValidChecksum( new File( exampleDir, "openssl.jar.md5" ) ) );
         assertTrue( checksum.isValidChecksum( new File( exampleDir, "openssl.jar.sha1" ) ) );
+        assertTrue( checksum.isValidChecksum( new File( exampleDir, "openssl.jar.sha256" ) ) );
     }
 
     @Test
