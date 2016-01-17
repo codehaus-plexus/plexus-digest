@@ -34,6 +34,11 @@ import java.io.IOException;
 public class ChecksumFile
 {
     /**
+     * @plexus.requirement role-hint="sha256"
+     */
+    private Digester digestSha256;
+
+    /**
      * @plexus.requirement role-hint="sha1"
      */
     private Digester digestSha1;
@@ -82,22 +87,7 @@ public class ChecksumFile
         }
 
         String path = checksumFile.getAbsolutePath();
-        Digester digester = null;
-
-        if ( path.endsWith( digestMd5.getFilenameExtension() ) )
-        {
-            digester = digestMd5;
-        }
-        else if ( path.endsWith( digestSha1.getFilenameExtension() ) )
-        {
-            digester = digestSha1;
-        }
-        // TODO: Add more digester implementations here.
-
-        if ( digester == null )
-        {
-            throw new DigesterException( "Unable to determine digester type from filename " + path );
-        }
+        final Digester digester = findDigesterByFileSuffix(path);
 
         File referenceFile = new File( path.substring( 0, path.length() - digester.getFilenameExtension().length() ) );
 
@@ -107,6 +97,24 @@ public class ChecksumFile
         String actualChecksum = digester.calc( referenceFile );
 
         return StringUtils.equalsIgnoreCase( expectedChecksum, actualChecksum );
+    }
+
+    private Digester findDigesterByFileSuffix(String path) throws DigesterException {
+        if ( path.endsWith( digestMd5.getFilenameExtension() ) )
+        {
+            return digestMd5;
+        }
+        else if ( path.endsWith( digestSha1.getFilenameExtension() ) )
+        {
+            return digestSha1;
+        }
+        else if ( path.endsWith( digestSha256.getFilenameExtension() ) )
+        {
+            return digestSha256;
+        }
+        // TODO: Add more digester implementations here.
+
+        throw new DigesterException( "Unable to determine digester type from filename " + path );
     }
 
     /**
