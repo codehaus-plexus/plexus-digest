@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.codehaus.plexus</groupId>
     <artifactId>plexus-components</artifactId>
-    <version>4.0</version>
+    <version>6.1</version>
     <relativePath/>
   </parent>
 
@@ -29,6 +29,10 @@
       <url>${project.scm.developerConnection}</url>
     </site>
   </distributionManagement>
+
+  <properties>
+    <project.build.outputTimestamp>2020-01-20T18:52:37Z</project.build.outputTimestamp>
+  </properties>
 
   <dependencies>
     <dependency>
