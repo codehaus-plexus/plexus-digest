@@ -34,7 +34,11 @@ public class DigesterTest
 
     private static final String SHA1 = "2a7b459938e12a2dc35d1bf6cff35e9c2b592fa9";
 
+    private static final String SHA256 = "56bfadc51bd0591ae1af06d28f4b3f86736007b213bfa95016681c7f8b27090c";
+
     private static final String WRONG_SHA1 = "4d8703779816556cdb8be7f6bb5c954f4b5730e2";
+
+    private Digester sha256Digest;
 
     private Digester sha1Digest;
 
@@ -45,72 +49,83 @@ public class DigesterTest
     {
         super.setUp();
 
+        sha256Digest = (Digester) lookup( Digester.ROLE, "sha256" );
         sha1Digest = (Digester) lookup( Digester.ROLE, "sha1" );
         md5Digest = (Digester) lookup( Digester.ROLE, "md5" );
     }
 
     public void testAlgorithm()
     {
+        assertEquals( "SHA-256", sha256Digest.getAlgorithm() );
         assertEquals( "SHA-1", sha1Digest.getAlgorithm() );
         assertEquals( "MD5", md5Digest.getAlgorithm() );
     }
 
-    public void testBareDigestFormat()
-        throws DigesterException, IOException
-    {
-        File file = new File( getClass().getResource( "/test-file.txt" ).getPath() );
-
+    public void testMd5DigestFormat() {
         try
         {
-            md5Digest.verify( file, MD5 );
+            md5Digest.verify( new File( getClass().getResource( "/test-file.txt" ).getPath() ) , MD5 );
         }
         catch ( DigesterException e )
         {
-            fail( "Bare format MD5 must not throw exception" );
-        }
-
-        try
-        {
-            sha1Digest.verify( file, SHA1 );
-        }
-        catch ( DigesterException e )
-        {
-            fail( "Bare format SHA1 must not throw exception" );
-        }
-
-        try
-        {
-            sha1Digest.verify( file, WRONG_SHA1 );
-            fail( "wrong checksum must throw an exception" );
-        }
-        catch ( DigesterException e )
-        {
-            //expected
+            fail( "Bare format MD5 must not throw exception: " + e.getMessage());
         }
     }
 
-    public void testOpensslDigestFormat()
-        throws IOException, DigesterException
-    {
-        File file = new File( getClass().getResource( "/test-file.txt" ).getPath() );
-
+    public void testSha1DigestFormat() {
         try
         {
-            md5Digest.verify( file, "MD5(test-file.txt)= " + MD5 );
+            sha1Digest.verify( new File( getClass().getResource( "/test-file.txt" ).getPath() ) , SHA1 );
         }
         catch ( DigesterException e )
         {
-            fail( "OpenSSL MD5 format must not cause exception" );
+            fail( "Bare format SHA1 must not throw exception: " + e.getMessage());
         }
+    }
 
+    public void testWrongSha1DigestFormat() {
         try
         {
-            md5Digest.verify( file, "MD5 (test-file.txt) = " + MD5 );
+            sha1Digest.verify( new File( getClass().getResource( "/test-file.txt" ).getPath() ) , WRONG_SHA1 );
+            fail( "wrong checksum must throw an exception" );
+        }
+        catch ( DigesterException ignored )
+        {
+            // expected
+        }
+    }
+
+    public void testSha256DigestFormat() {
+        try
+        {
+            sha256Digest.verify( new File( getClass().getResource( "/test-file.txt" ).getPath() ) , SHA256 );
         }
         catch ( DigesterException e )
         {
-            fail( "FreeBSD MD5 format must not cause exception" );
+            fail( "Bare format SHA256 must not throw exception: " + e.getMessage());
         }
+    }
+
+    public void testOpensslDigestMd5Format()
+        throws IOException, DigesterException {
+        final File file = new File(getClass().getResource("/test-file.txt").getPath());
+
+        try {
+            md5Digest.verify(file, "MD5(test-file.txt)= " + MD5);
+        } catch (DigesterException e) {
+            fail("OpenSSL MD5 format must not cause exception: " + e.getMessage());
+        }
+
+        try {
+            md5Digest.verify(file, "MD5 (test-file.txt) = " + MD5);
+        } catch (DigesterException e) {
+            fail("FreeBSD MD5 format must not cause exception: " + e.getMessage());
+        }
+    }
+
+    public void testOpensslDigestSha1Format()
+        throws IOException, DigesterException {
+        final File file = new File(getClass().getResource("/test-file.txt").getPath());
 
         try
         {
@@ -118,7 +133,7 @@ public class DigesterTest
         }
         catch ( DigesterException e )
         {
-            fail( "OpenSSL SHA1 format must not cause exception" );
+            fail( "OpenSSL SHA1 format must not cause exception: " + e.getMessage());
         }
 
         try
@@ -127,7 +142,7 @@ public class DigesterTest
         }
         catch ( DigesterException e )
         {
-            fail( "FreeBSD SHA1 format must not cause exception" );
+            fail( "FreeBSD SHA1 format must not cause exception: " + e.getMessage());
         }
 
         try
@@ -151,28 +166,50 @@ public class DigesterTest
         }
     }
 
-    public void testGnuDigestFormat()
-        throws NoSuchAlgorithmException, IOException, DigesterException
-    {
-        File file = new File( getClass().getResource( "/test-file.txt" ).getPath() );
+    public void testOpensslDigestSha256Format()
+        throws IOException, DigesterException {
+        final File file = new File(getClass().getResource("/test-file.txt").getPath());
 
         try
         {
-            md5Digest.verify( file, MD5 + " *test-file.txt" );
+            sha256Digest.verify( file, "SHA256(test-file.txt) = " + SHA256 );
         }
         catch ( DigesterException e )
         {
-            fail( "GNU format MD5 must not cause exception" );
+            fail( "FreeBSD SHA256 format must not cause exception: " + e.getMessage());
         }
 
         try
         {
-            md5Digest.verify( file, MD5 + " test-file.txt" );
+            sha256Digest.verify( file, "SHA1(FOO) = " + SHA256 );
+            fail( "Wrong filename should cause an exception" );
         }
         catch ( DigesterException e )
         {
-            fail( "GNU text format MD5 must not cause exception" );
+            //expected
         }
+    }
+
+    public void testGnuDigestMd5Format()
+        throws NoSuchAlgorithmException, IOException, DigesterException {
+        final File file = new File(getClass().getResource("/test-file.txt").getPath());
+
+        try {
+            md5Digest.verify(file, MD5 + " *test-file.txt");
+        } catch (DigesterException e) {
+            fail("GNU format MD5 must not cause exception: " + e.getMessage());
+        }
+
+        try {
+            md5Digest.verify(file, MD5 + " test-file.txt");
+        } catch (DigesterException e) {
+            fail("GNU text format MD5 must not cause exception: " + e.getMessage());
+        }
+    }
+
+    public void testGnuDigestSha1Format()
+        throws NoSuchAlgorithmException, IOException, DigesterException {
+        final File file = new File(getClass().getResource("/test-file.txt").getPath());
 
         try
         {
@@ -180,7 +217,7 @@ public class DigesterTest
         }
         catch ( DigesterException e )
         {
-            fail( "GNU format SHA1 must not cause exception" );
+            fail( "GNU format SHA1 must not cause exception: " + e.getMessage());
         }
 
         try
@@ -189,7 +226,7 @@ public class DigesterTest
         }
         catch ( DigesterException e )
         {
-            fail( "GNU text format SHA1 must not cause exception" );
+            fail( "GNU text format SHA1 must not cause exception: " + e.getMessage());
         }
 
         try
@@ -210,6 +247,29 @@ public class DigesterTest
         catch ( DigesterException e )
         {
             //expected
+        }
+    }
+
+    public void testGnuDigestSha256Format()
+        throws NoSuchAlgorithmException, IOException, DigesterException {
+        final File file = new File(getClass().getResource("/test-file.txt").getPath());
+
+        try
+        {
+            sha256Digest.verify( file, SHA256 + " *test-file.txt" );
+        }
+        catch ( DigesterException e )
+        {
+            fail( "GNU format SHA256 must not cause exception: " + e.getMessage());
+        }
+
+        try
+        {
+            sha256Digest.verify( file, SHA256 + " test-file.txt" );
+        }
+        catch ( DigesterException e )
+        {
+            fail( "GNU text format SHA256 must not cause exception: " + e.getMessage());
         }
     }
 
