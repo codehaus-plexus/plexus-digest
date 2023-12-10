@@ -23,8 +23,7 @@ import java.io.File;
  *
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
  */
-public interface Digester
-{
+public interface Digester {
     /** Constant <code>ROLE="Digester.class.getName()"</code> */
     String ROLE = Digester.class.getName();
 
@@ -49,8 +48,7 @@ public interface Digester
      * @return the current checksum.
      * @throws org.codehaus.plexus.digest.DigesterException if there was a problem computing the hashcode.
      */
-    String calc( File file )
-        throws DigesterException;
+    String calc(File file) throws DigesterException;
 
     /**
      * Verify that a checksum is correct.
@@ -59,6 +57,5 @@ public interface Digester
      * @param checksum the checksum to compare to
      * @throws org.codehaus.plexus.digest.DigesterException if there was a problem computing the hashcode.
      */
-    void verify( File file, String checksum )
-        throws DigesterException;
+    void verify(File file, String checksum) throws DigesterException;
 }

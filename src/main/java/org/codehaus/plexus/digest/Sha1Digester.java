@@ -22,25 +22,21 @@ import javax.inject.Named;
  * Digester that does SHA1 Message Digesting Only.
  *
  */
-@Named( "sha1" )
-public class Sha1Digester
-    extends AbstractDigester
-{
+@Named("sha1")
+public class Sha1Digester extends AbstractDigester {
     /**
      * <p>getFilenameExtension.</p>
      *
      * @return a {@link java.lang.String} object.
      */
-    public String getFilenameExtension()
-    {
+    public String getFilenameExtension() {
         return ".sha1";
     }
 
     /**
      * <p>Constructor for Sha1Digester.</p>
      */
-    public Sha1Digester()
-    {
-        super( new StreamingSha1Digester() );
+    public Sha1Digester() {
+        super(new StreamingSha1Digester());
     }
 }

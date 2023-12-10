@@ -21,14 +21,11 @@ package org.codehaus.plexus.digest;
  *
  * @author Edwin Punzalan
  */
-public class DigesterException
-    extends Exception
-{
+public class DigesterException extends Exception {
     /**
      * <p>Constructor for DigesterException.</p>
      */
-    public DigesterException()
-    {
+    public DigesterException() {
         super();
     }
 
@@ -37,9 +34,8 @@ public class DigesterException
      *
      * @param message a {@link java.lang.String} object.
      */
-    public DigesterException( String message )
-    {
-        super( message );
+    public DigesterException(String message) {
+        super(message);
     }
 
     /**
@@ -48,9 +44,8 @@ public class DigesterException
      * @param message a {@link java.lang.String} object.
      * @param cause a {@link java.lang.Throwable} object.
      */
-    public DigesterException( String message, Throwable cause )
-    {
-        super( message, cause );
+    public DigesterException(String message, Throwable cause) {
+        super(message, cause);
     }
 
     /**
@@ -58,8 +53,7 @@ public class DigesterException
      *
      * @param cause a {@link java.lang.Throwable} object.
      */
-    public DigesterException( Throwable cause )
-    {
-        super( cause );
+    public DigesterException(Throwable cause) {
+        super(cause);
     }
 }

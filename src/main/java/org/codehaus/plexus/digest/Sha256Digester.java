@@ -22,17 +22,13 @@ import javax.inject.Named;
  * Digester that does SHA256 Message Digesting Only.
  *
  */
-@Named( "sha256" )
-public class Sha256Digester
-    extends AbstractDigester
-{
-  public String getFilenameExtension()
-  {
-    return ".sha256";
-  }
+@Named("sha256")
+public class Sha256Digester extends AbstractDigester {
+    public String getFilenameExtension() {
+        return ".sha256";
+    }
 
-  public Sha256Digester()
-  {
-    super( new StreamingSha256Digester() );
-  }
+    public Sha256Digester() {
+        super(new StreamingSha256Digester());
+    }
 }

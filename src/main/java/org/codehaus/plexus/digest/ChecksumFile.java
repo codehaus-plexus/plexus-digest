@@ -16,14 +16,15 @@ package org.codehaus.plexus.digest;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.StringUtils;
-
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.StringUtils;
 
 /**
  * ChecksumFile
@@ -31,18 +32,17 @@ import java.io.IOException;
  * @author <a href="mailto:joakim@erdfelt.com">Joakim Erdfelt</a>
  */
 @Named
-public class ChecksumFile
-{
+public class ChecksumFile {
     @Inject
-    @Named ( "sha256" )
+    @Named("sha256")
     private Digester digestSha256;
 
     @Inject
-    @Named ( "sha1" )
+    @Named("sha1")
     private Digester digestSha1;
 
     @Inject
-    @Named ( "md5" )
+    @Named("md5")
     private Digester digestMd5;
 
     /**
@@ -67,47 +67,40 @@ public class ChecksumFile
      * @throws java.io.FileNotFoundException if the checksumFile itself or the file it refers to is not found.
      * @throws java.io.IOException if the reading of the checksumFile or the file it refers to fails.
      */
-    public boolean isValidChecksum( File checksumFile ) throws DigesterException, FileNotFoundException, IOException
-    {
-        if ( !checksumFile.exists() )
-        {
-            throw new FileNotFoundException( "Unable to find checksum file " + checksumFile.getAbsolutePath() );
+    public boolean isValidChecksum(File checksumFile) throws DigesterException, FileNotFoundException, IOException {
+        if (!checksumFile.exists()) {
+            throw new FileNotFoundException("Unable to find checksum file " + checksumFile.getAbsolutePath());
         }
 
-        if ( !checksumFile.isFile() )
-        {
-            throw new IOException( "Unable to load checksum from non-file " + checksumFile.getAbsolutePath() );
+        if (!checksumFile.isFile()) {
+            throw new IOException("Unable to load checksum from non-file " + checksumFile.getAbsolutePath());
         }
 
         String path = checksumFile.getAbsolutePath();
         Digester digester = findDigesterByFileSuffix(path);
 
-        File referenceFile = new File( path.substring( 0, path.length() - digester.getFilenameExtension().length() ) );
+        File referenceFile = new File(path.substring(
+                0, path.length() - digester.getFilenameExtension().length()));
 
-        String rawChecksum = FileUtils.fileRead( checksumFile, "UTF-8" );
-        String expectedChecksum = DigestUtils.cleanChecksum( rawChecksum, digester, referenceFile.getName() );
+        String rawChecksum = FileUtils.fileRead(checksumFile, "UTF-8");
+        String expectedChecksum = DigestUtils.cleanChecksum(rawChecksum, digester, referenceFile.getName());
 
-        String actualChecksum = digester.calc( referenceFile );
+        String actualChecksum = digester.calc(referenceFile);
 
-        return StringUtils.equalsIgnoreCase( expectedChecksum, actualChecksum );
+        return StringUtils.equalsIgnoreCase(expectedChecksum, actualChecksum);
     }
 
     private Digester findDigesterByFileSuffix(String path) throws DigesterException {
-        if ( path.endsWith( digestMd5.getFilenameExtension() ) )
-        {
+        if (path.endsWith(digestMd5.getFilenameExtension())) {
             return digestMd5;
-        }
-        else if ( path.endsWith( digestSha1.getFilenameExtension() ) )
-        {
+        } else if (path.endsWith(digestSha1.getFilenameExtension())) {
             return digestSha1;
-        }
-        else if ( path.endsWith( digestSha256.getFilenameExtension() ) )
-        {
+        } else if (path.endsWith(digestSha256.getFilenameExtension())) {
             return digestSha256;
         }
         // TODO: Add more digester implementations here.
 
-        throw new DigesterException( "Unable to determine digester type from filename " + path );
+        throw new DigesterException("Unable to determine digester type from filename " + path);
     }
 
     /**
@@ -119,11 +112,10 @@ public class ChecksumFile
      * @throws org.codehaus.plexus.digest.DigesterException if there was a problem calculating the checksum of the referenceFile.
      * @throws java.io.IOException if there was a problem either reading the referenceFile, or writing the checksum file.
      */
-    public File createChecksum( File referenceFile, Digester digester ) throws DigesterException, IOException
-    {
-        File checksumFile = new File( referenceFile.getAbsolutePath() + digester.getFilenameExtension() );
-        String checksum = digester.calc( referenceFile );
-        FileUtils.fileWrite( checksumFile.getAbsolutePath(), "UTF-8", checksum + "  " + referenceFile.getName() );
+    public File createChecksum(File referenceFile, Digester digester) throws DigesterException, IOException {
+        File checksumFile = new File(referenceFile.getAbsolutePath() + digester.getFilenameExtension());
+        String checksum = digester.calc(referenceFile);
+        FileUtils.fileWrite(checksumFile.getAbsolutePath(), "UTF-8", checksum + "  " + referenceFile.getName());
         return checksumFile;
     }
 }

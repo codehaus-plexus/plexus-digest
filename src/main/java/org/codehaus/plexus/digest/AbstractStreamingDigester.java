@@ -26,9 +26,7 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
  */
-public abstract class AbstractStreamingDigester
-    implements StreamingDigester
-{
+public abstract class AbstractStreamingDigester implements StreamingDigester {
     protected final MessageDigest md;
 
     private static final int BUFFER_SIZE = 32768;
@@ -38,16 +36,12 @@ public abstract class AbstractStreamingDigester
      *
      * @param algorithm a {@link java.lang.String} object.
      */
-    protected AbstractStreamingDigester( String algorithm )
-    {
-        try
-        {
-            md = MessageDigest.getInstance( algorithm );
-        }
-        catch ( NoSuchAlgorithmException e )
-        {
-            throw new IllegalStateException( "Unable to initialize digest algorithm " + algorithm + " : "
-                + e.getMessage() );
+    protected AbstractStreamingDigester(String algorithm) {
+        try {
+            md = MessageDigest.getInstance(algorithm);
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException(
+                    "Unable to initialize digest algorithm " + algorithm + " : " + e.getMessage());
         }
     }
 
@@ -56,8 +50,7 @@ public abstract class AbstractStreamingDigester
      *
      * @return a {@link java.lang.String} object.
      */
-    public String getAlgorithm()
-    {
+    public String getAlgorithm() {
         return md.getAlgorithm();
     }
 
@@ -67,10 +60,8 @@ public abstract class AbstractStreamingDigester
      * @return a {@link java.lang.String} object.
      * @throws org.codehaus.plexus.digest.DigesterException if any.
      */
-    public String calc()
-        throws DigesterException
-    {
-        return calc( this.md );
+    public String calc() throws DigesterException {
+        return calc(this.md);
     }
 
     /**
@@ -78,17 +69,13 @@ public abstract class AbstractStreamingDigester
      *
      * @throws org.codehaus.plexus.digest.DigesterException if any.
      */
-    public void reset()
-        throws DigesterException
-    {
+    public void reset() throws DigesterException {
         md.reset();
     }
 
     /** {@inheritDoc} */
-    public void update( InputStream is )
-        throws DigesterException
-    {
-        update( is, md );
+    public void update(InputStream is) throws DigesterException {
+        update(is, md);
     }
 
     /**
@@ -97,9 +84,8 @@ public abstract class AbstractStreamingDigester
      * @param md a {@link java.security.MessageDigest} object.
      * @return a {@link java.lang.String} object.
      */
-    protected static String calc( MessageDigest md )
-    {
-        return Hex.encode( md.digest() );
+    protected static String calc(MessageDigest md) {
+        return Hex.encode(md.digest());
     }
 
     /**
@@ -109,22 +95,16 @@ public abstract class AbstractStreamingDigester
      * @param digest a {@link java.security.MessageDigest} object.
      * @throws org.codehaus.plexus.digest.DigesterException if any.
      */
-    protected static void update( InputStream is, MessageDigest digest )
-        throws DigesterException
-    {
-        try
-        {
+    protected static void update(InputStream is, MessageDigest digest) throws DigesterException {
+        try {
             byte[] buffer = new byte[BUFFER_SIZE];
-            int size = is.read( buffer, 0, BUFFER_SIZE );
-            while ( size >= 0 )
-            {
-                digest.update( buffer, 0, size );
-                size = is.read( buffer, 0, BUFFER_SIZE );
+            int size = is.read(buffer, 0, BUFFER_SIZE);
+            while (size >= 0) {
+                digest.update(buffer, 0, size);
+                size = is.read(buffer, 0, BUFFER_SIZE);
             }
-        }
-        catch ( IOException e )
-        {
-            throw new DigesterException( "Unable to update " + digest.getAlgorithm() + " hash: " + e.getMessage(), e );
+        } catch (IOException e) {
+            throw new DigesterException("Unable to update " + digest.getAlgorithm() + " hash: " + e.getMessage(), e);
         }
     }
 }

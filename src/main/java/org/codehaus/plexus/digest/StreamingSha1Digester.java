@@ -23,15 +23,12 @@ import javax.inject.Named;
  *
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
  */
-@Named( "sha1" )
-public class StreamingSha1Digester
-    extends AbstractStreamingDigester
-{
+@Named("sha1")
+public class StreamingSha1Digester extends AbstractStreamingDigester {
     /**
      * <p>Constructor for StreamingSha1Digester.</p>
      */
-    public StreamingSha1Digester()
-    {
-        super( "SHA-1" );
+    public StreamingSha1Digester() {
+        super("SHA-1");
     }
 }
