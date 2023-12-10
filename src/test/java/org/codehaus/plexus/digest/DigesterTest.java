@@ -16,17 +16,22 @@ package org.codehaus.plexus.digest;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.PlexusTestCase;
+import org.codehaus.plexus.testing.PlexusTest;
+import org.junit.jupiter.api.Test;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.File;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test the digester.
  *
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
  */
-public class DigesterTest
-    extends PlexusTestCase
+@PlexusTest
+class DigesterTest
 {
     private static final String MD5 = "adbc688ce77fa2aece4bb72cad9f98ba";
 
@@ -34,186 +39,75 @@ public class DigesterTest
 
     private static final String WRONG_SHA1 = "4d8703779816556cdb8be7f6bb5c954f4b5730e2";
 
+    @Inject
+    @Named( "sha1" )
     private Digester sha1Digest;
 
+    @Inject
+    @Named( "md5" )
     private Digester md5Digest;
 
-    protected void setUp()
-        throws Exception
-    {
-        super.setUp();
-
-        sha1Digest = (Digester) lookup( Digester.ROLE, "sha1" );
-        md5Digest = (Digester) lookup( Digester.ROLE, "md5" );
-    }
-
-    public void testAlgorithm()
+    @Test
+    void algorithm()
     {
         assertEquals( "SHA-1", sha1Digest.getAlgorithm() );
         assertEquals( "MD5", md5Digest.getAlgorithm() );
     }
 
-    public void testBareDigestFormat() {
+    @Test
+    void bareDigestFormat() {
         File file = new File( getClass().getResource( "/test-file.txt" ).getPath() );
 
-        try
-        {
-            md5Digest.verify( file, MD5 );
-        }
-        catch ( DigesterException e )
-        {
-            fail( "Bare format MD5 must not throw exception" );
-        }
+        assertDoesNotThrow( () -> md5Digest.verify( file, MD5 ), "Bare format MD5 must not throw exception" );
 
-        try
-        {
-            sha1Digest.verify( file, SHA1 );
-        }
-        catch ( DigesterException e )
-        {
-            fail( "Bare format SHA1 must not throw exception" );
-        }
+        assertDoesNotThrow( () -> sha1Digest.verify( file, SHA1 ), "Bare format SHA1 must not throw exception" );
 
-        try
-        {
-            sha1Digest.verify( file, WRONG_SHA1 );
-            fail( "wrong checksum must throw an exception" );
-        }
-        catch ( DigesterException e )
-        {
-            //expected
-        }
+        assertThrows( DigesterException.class,
+                () -> sha1Digest.verify( file, WRONG_SHA1 ), "Wrong SHA1 must throw exception" );
     }
 
-    public void testOpensslDigestFormat() {
+    @Test
+    void opensslDigestFormat() {
         File file = new File( getClass().getResource( "/test-file.txt" ).getPath() );
 
-        try
-        {
-            md5Digest.verify( file, "MD5(test-file.txt)= " + MD5 );
-        }
-        catch ( DigesterException e )
-        {
-            fail( "OpenSSL MD5 format must not cause exception" );
-        }
+        assertDoesNotThrow( () -> md5Digest.verify( file, "MD5(test-file.txt)= " + MD5 ), "OpenSSL MD5 format must not cause exception" );
 
-        try
-        {
-            md5Digest.verify( file, "MD5 (test-file.txt) = " + MD5 );
-        }
-        catch ( DigesterException e )
-        {
-            fail( "FreeBSD MD5 format must not cause exception" );
-        }
+        assertDoesNotThrow( () -> md5Digest.verify( file, "MD5 (test-file.txt) = " + MD5 ), "FreeBSD MD5 format must not cause exception" );
 
-        try
-        {
-            sha1Digest.verify( file, "SHA1(test-file.txt)= " + SHA1 );
-        }
-        catch ( DigesterException e )
-        {
-            fail( "OpenSSL SHA1 format must not cause exception" );
-        }
+        assertDoesNotThrow( () -> sha1Digest.verify( file, "SHA1(test-file.txt)= " + SHA1 ), "OpenSSL SHA1 format must not cause exception" );
 
-        try
-        {
-            sha1Digest.verify( file, "SHA1 (test-file.txt) = " + SHA1 );
-        }
-        catch ( DigesterException e )
-        {
-            fail( "FreeBSD SHA1 format must not cause exception" );
-        }
+        assertDoesNotThrow( () -> sha1Digest.verify( file, "SHA1 (test-file.txt) = " + SHA1 ), "FreeBSD SHA1 format must not cause exception" );
 
-        try
-        {
-            sha1Digest.verify( file, "SHA1 (FOO) = " + SHA1 );
-            fail( "Wrong filename should cause an exception" );
-        }
-        catch ( DigesterException e )
-        {
-            //expected
-        }
+        assertThrows( DigesterException.class,
+                () -> sha1Digest.verify( file, "SHA1 (FOO) = " + SHA1 ), "Wrong filename must throw exception" );
 
-        try
-        {
-            sha1Digest.verify( file, "SHA1 (test-file.txt) = " + WRONG_SHA1 );
-            fail( "Wrong sha1 should cause an exception" );
-        }
-        catch ( DigesterException e )
-        {
-            //expected
-        }
+        assertThrows( DigesterException.class,
+                () -> sha1Digest.verify( file, "SHA1 (test-file.txt) = " + WRONG_SHA1 ), "Wrong SHA1 must throw exception" );
+
     }
 
-    public void testGnuDigestFormat() {
+    @Test
+    void gnuDigestFormat() {
         File file = new File( getClass().getResource( "/test-file.txt" ).getPath() );
 
-        try
-        {
-            md5Digest.verify( file, MD5 + " *test-file.txt" );
-        }
-        catch ( DigesterException e )
-        {
-            fail( "GNU format MD5 must not cause exception" );
-        }
+        assertDoesNotThrow( () -> md5Digest.verify( file, MD5 + " *test-file.txt" ), "GNU format MD5 must not cause exception" );
 
-        try
-        {
-            md5Digest.verify( file, MD5 + " test-file.txt" );
-        }
-        catch ( DigesterException e )
-        {
-            fail( "GNU text format MD5 must not cause exception" );
-        }
+        assertDoesNotThrow( () -> md5Digest.verify( file, MD5 + " test-file.txt" ), "GNU text format MD5 must not cause exception" );
 
-        try
-        {
-            sha1Digest.verify( file, SHA1 + " *test-file.txt" );
-        }
-        catch ( DigesterException e )
-        {
-            fail( "GNU format SHA1 must not cause exception" );
-        }
+        assertDoesNotThrow( () -> sha1Digest.verify( file, SHA1 + " *test-file.txt" ), "GNU format SHA1 must not cause exception" );
 
-        try
-        {
-            sha1Digest.verify( file, SHA1 + " test-file.txt" );
-        }
-        catch ( DigesterException e )
-        {
-            fail( "GNU text format SHA1 must not cause exception" );
-        }
+        assertDoesNotThrow( () -> sha1Digest.verify( file, SHA1 + " test-file.txt" ), "GNU text format SHA1 must not cause exception" );
 
-        try
-        {
-            sha1Digest.verify( file, SHA1 + " FOO" );
-            fail( "Wrong filename cause an exception" );
-        }
-        catch ( DigesterException e )
-        {
-            //expected
-        }
+        assertThrows( DigesterException.class,
+                () -> sha1Digest.verify( file, SHA1 + " FOO" ), "Wrong filename must throw exception" );
 
-        try
-        {
-            sha1Digest.verify( file, WRONG_SHA1 + " test-file.txt" );
-            fail( "Wrong SHA1 cause an exception" );
-        }
-        catch ( DigesterException e )
-        {
-            //expected
-        }
+        assertThrows( DigesterException.class,
+                () -> sha1Digest.verify( file, WRONG_SHA1 + " test-file.txt" ), "Wrong SHA1 must throw exception" );
     }
 
-    public void testUntrimmedContent() {
+    @Test
+    void untrimmedContent() {
         File file = new File( getClass().getResource( "/test-file.txt" ).getPath() );
-        try
-        {
-            sha1Digest.verify( file, SHA1 + " *test-file.txt \n" );
-        }
-        catch ( DigesterException e )
-        {
-            fail( "GNU untrimmed SHA1 must not cause exception" );
-        }
+        assertDoesNotThrow( () -> sha1Digest.verify( file, SHA1 + " *test-file.txt \n" ), "GNU untrimmed SHA1 must not cause exception" );
     }
 }

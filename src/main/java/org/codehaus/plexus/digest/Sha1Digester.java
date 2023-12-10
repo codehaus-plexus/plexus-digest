@@ -16,11 +16,13 @@ package org.codehaus.plexus.digest;
  * limitations under the License.
  */
 
+import javax.inject.Named;
+
 /**
  * Digester that does SHA1 Message Digesting Only.
  *
- * @plexus.component role="org.codehaus.plexus.digest.Digester" role-hint="sha1"
  */
+@Named( "sha1" )
 public class Sha1Digester
     extends AbstractDigester
 {

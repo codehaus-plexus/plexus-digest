@@ -19,6 +19,8 @@ package org.codehaus.plexus.digest;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,19 +29,16 @@ import java.io.IOException;
  * ChecksumFile
  *
  * @author <a href="mailto:joakim@erdfelt.com">Joakim Erdfelt</a>
- * @version $Id$
- * @plexus.component role="org.codehaus.plexus.digest.ChecksumFile"
  */
+@Named
 public class ChecksumFile
 {
-    /**
-     * @plexus.requirement role-hint="sha1"
-     */
+    @Inject
+    @Named ( "sha1" )
     private Digester digestSha1;
 
-    /**
-     * @plexus.requirement role-hint="md5";
-     */
+    @Inject
+    @Named ( "md5" )
     private Digester digestMd5;
 
     /**

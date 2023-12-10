@@ -16,12 +16,14 @@ package org.codehaus.plexus.digest;
  * limitations under the License.
  */
 
+import javax.inject.Named;
+
 /**
  * An MD5 implementation of the streaming digester.
  *
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
- * @plexus.component role="org.codehaus.plexus.digest.StreamingDigester" role-hint="md5"
  */
+@Named( "md5" )
 public class StreamingMd5Digester
     extends AbstractStreamingDigester
 {

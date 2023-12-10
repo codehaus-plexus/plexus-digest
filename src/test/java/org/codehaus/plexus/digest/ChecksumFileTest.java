@@ -16,29 +16,29 @@ package org.codehaus.plexus.digest;
  * limitations under the License.
  */
 
-import org.codehaus.plexus.PlexusTestCase;
+import org.codehaus.plexus.testing.PlexusTest;
+import org.junit.jupiter.api.Test;
 
+import javax.inject.Inject;
 import java.io.File;
 
+import static org.codehaus.plexus.testing.PlexusExtension.getBasedir;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
- * ChecksumFileTest 
+ * ChecksumFileTest
  *
  * @author <a href="mailto:joakim@erdfelt.com">Joakim Erdfelt</a>
- * @version $Id$
  */
-public class ChecksumFileTest extends PlexusTestCase
+@PlexusTest
+class ChecksumFileTest
 {
+    @Inject
     private ChecksumFile checksum;
 
-    protected void setUp()
-        throws Exception
-    {
-        super.setUp();
-
-        checksum = (ChecksumFile) lookup( ChecksumFile.class.getName() );
-    }
-
-    public void testIsValidChecksum()
+    @Test
+    void isValidChecksum()
         throws Exception
     {
         File exampleDir = new File( getBasedir(), "src/test/examples" );
@@ -59,7 +59,8 @@ public class ChecksumFileTest extends PlexusTestCase
         assertTrue( checksum.isValidChecksum( new File( exampleDir, "openssl.jar.sha1" ) ) );
     }
 
-    public void testCreateChecksum()
+    @Test
+    void createChecksum()
         throws Exception
     {
         File dataFile = File.createTempFile( "plexus-digest-test", null );
