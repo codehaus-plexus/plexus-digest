@@ -25,6 +25,7 @@ import java.io.File;
  */
 public interface Digester
 {
+    /** Constant <code>ROLE="Digester.class.getName()"</code> */
     String ROLE = Digester.class.getName();
 
     /**
@@ -33,10 +34,10 @@ public interface Digester
      * @return the algorithm
      */
     String getAlgorithm();
-    
+
     /**
      * The filename extension for this digester.
-     * 
+     *
      * @return the filename extension.
      */
     String getFilenameExtension();
@@ -46,7 +47,7 @@ public interface Digester
      *
      * @param file the file to calculate the checksum for
      * @return the current checksum.
-     * @throws DigesterException if there was a problem computing the hashcode.
+     * @throws org.codehaus.plexus.digest.DigesterException if there was a problem computing the hashcode.
      */
     String calc( File file )
         throws DigesterException;
@@ -56,7 +57,7 @@ public interface Digester
      *
      * @param file     the file to compute the checksum for
      * @param checksum the checksum to compare to
-     * @throws DigesterException if there was a problem computing the hashcode.
+     * @throws org.codehaus.plexus.digest.DigesterException if there was a problem computing the hashcode.
      */
     void verify( File file, String checksum )
         throws DigesterException;

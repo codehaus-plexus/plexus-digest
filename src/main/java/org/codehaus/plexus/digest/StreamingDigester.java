@@ -25,6 +25,7 @@ import java.io.InputStream;
  */
 public interface StreamingDigester
 {
+    /** Constant <code>ROLE="StreamingDigester.class.getName()"</code> */
     String ROLE = StreamingDigester.class.getName();
 
     /**
@@ -38,7 +39,7 @@ public interface StreamingDigester
      * Reset the hashcode calculation algorithm.
      * Only useful when performing incremental hashcodes based on repeated use of {@link #update(InputStream)}
      *
-     * @throws DigesterException if there was a problem with the internal message digest
+     * @throws org.codehaus.plexus.digest.DigesterException if there was a problem with the internal message digest
      */
     void reset()
         throws DigesterException;
@@ -47,7 +48,7 @@ public interface StreamingDigester
      * Calculate the current checksum.
      *
      * @return the current checksum.
-     * @throws DigesterException if there was a problem computing the hashcode.
+     * @throws org.codehaus.plexus.digest.DigesterException if there was a problem computing the hashcode.
      */
     String calc()
         throws DigesterException;
@@ -56,7 +57,7 @@ public interface StreamingDigester
      * Update the checksum with the content of the input stream.
      *
      * @param is the input stream
-     * @throws DigesterException if there was a problem computing the hashcode.
+     * @throws org.codehaus.plexus.digest.DigesterException if there was a problem computing the hashcode.
      */
     void update( InputStream is )
         throws DigesterException;

@@ -17,26 +17,47 @@ package org.codehaus.plexus.digest;
  */
 
 /**
+ * <p>DigesterException class.</p>
+ *
  * @author Edwin Punzalan
  */
 public class DigesterException
     extends Exception
 {
+    /**
+     * <p>Constructor for DigesterException.</p>
+     */
     public DigesterException()
     {
         super();
     }
 
+    /**
+     * <p>Constructor for DigesterException.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     public DigesterException( String message )
     {
         super( message );
     }
 
+    /**
+     * <p>Constructor for DigesterException.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param cause a {@link java.lang.Throwable} object.
+     */
     public DigesterException( String message, Throwable cause )
     {
         super( message, cause );
     }
 
+    /**
+     * <p>Constructor for DigesterException.</p>
+     *
+     * @param cause a {@link java.lang.Throwable} object.
+     */
     public DigesterException( Throwable cause )
     {
         super( cause );

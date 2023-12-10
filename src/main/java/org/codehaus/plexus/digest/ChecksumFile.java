@@ -24,11 +24,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * ChecksumFile 
+ * ChecksumFile
  *
  * @author <a href="mailto:joakim@erdfelt.com">Joakim Erdfelt</a>
  * @version $Id$
- * 
  * @plexus.component role="org.codehaus.plexus.digest.ChecksumFile"
  */
 public class ChecksumFile
@@ -47,27 +46,23 @@ public class ChecksumFile
      * <p>
      * Given a checksum file, check to see if the file it represents is valid according to the checksum.
      * </p>
-     * 
-     * <dl>
-     *   <lh>Terminology:</lh>
-     *   <dt>Checksum File</dt>
-     *   <dd>The file that contains the previously calculated checksum value for the reference file.
-     *       This is a text file with the extension ".sha1" or ".md5", and contains a single entry
-     *       consisting of an optional reference filename, and a checksum string.
-     *   </dd>
-     *   <dt>Reference File</dt>
-     *   <dd>The file that is being referenced in the checksum file.</dd>
-     * </dl>
-     * 
+     * <p>Terminology:</p>
+     * <p>Checksum File</p>
+     * <p>The file that contains the previously calculated checksum value for the reference file.
+     *     This is a text file with the extension ".sha1" or ".md5", and contains a single entry
+     *     consisting of an optional reference filename, and a checksum string.
+     * </p>
+     * <p>Reference File</p>
+     * <p>The file that is being referenced in the checksum file.</p>
      * <p>
      * NOTE: Only supports single file checksums of type MD5 or SHA1.
      * </p>
-     * 
+     *
      * @param checksumFile the checksum file (must end in ".sha1" or ".md5")
      * @return true if the checksum is valid for the file it represents.
-     * @throws DigesterException if there is a digester problem during the check of the reference file. 
-     * @throws FileNotFoundException if the checksumFile itself or the file it refers to is not found.
-     * @throws IOException if the reading of the checksumFile or the file it refers to fails.
+     * @throws org.codehaus.plexus.digest.DigesterException if there is a digester problem during the check of the reference file.
+     * @throws java.io.FileNotFoundException if the checksumFile itself or the file it refers to is not found.
+     * @throws java.io.IOException if the reading of the checksumFile or the file it refers to fails.
      */
     public boolean isValidChecksum( File checksumFile ) throws DigesterException, FileNotFoundException, IOException
     {
@@ -111,12 +106,12 @@ public class ChecksumFile
 
     /**
      * Creates a checksum file of the provided referenceFile.
-     * 
+     *
      * @param referenceFile the file to checksum.
      * @param digester the digester to use.
      * @return the checksum File that was created.
-     * @throws DigesterException if there was a problem calculating the checksum of the referenceFile. 
-     * @throws IOException if there was a problem either reading the referenceFile, or writing the checksum file.
+     * @throws org.codehaus.plexus.digest.DigesterException if there was a problem calculating the checksum of the referenceFile.
+     * @throws java.io.IOException if there was a problem either reading the referenceFile, or writing the checksum file.
      */
     public File createChecksum( File referenceFile, Digester digester ) throws DigesterException, IOException
     {

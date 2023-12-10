@@ -18,17 +18,25 @@ package org.codehaus.plexus.digest;
 
 /**
  * Digester that does MD5 Message Digesting Only.
- * 
+ *
  * @plexus.component role="org.codehaus.plexus.digest.Digester" role-hint="md5"
  */
 public class Md5Digester
     extends AbstractDigester
 {
+    /**
+     * <p>getFilenameExtension.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getFilenameExtension()
     {
         return ".md5";
     }
-    
+
+    /**
+     * <p>Constructor for Md5Digester.</p>
+     */
     public Md5Digester()
     {
         super( new StreamingMd5Digester() );
