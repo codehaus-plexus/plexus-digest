@@ -4,8 +4,8 @@
 
   <parent>
     <groupId>org.codehaus.plexus</groupId>
-    <artifactId>plexus-components</artifactId>
-    <version>14.2</version>
+    <artifactId>plexus</artifactId>
+    <version>15</version>
     <relativePath />
   </parent>
 
@@ -32,10 +32,18 @@
   </distributionManagement>
 
   <properties>
-    <javaVersion>8</javaVersion>
     <project.build.outputTimestamp>2020-01-20T18:52:37Z</project.build.outputTimestamp>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.codehaus.plexus</groupId>
+        <artifactId>plexus-utils</artifactId>
+        <version>4.0.0</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>javax.inject</groupId>
@@ -48,14 +56,18 @@
     </dependency>
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-xml</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-testing</artifactId>
       <version>1.2.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter</artifactId>
-      <version>5.10.1</version>
+      <artifactId>junit-jupiter-api</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -83,16 +95,6 @@
       <plugin>
         <groupId>org.eclipse.sisu</groupId>
         <artifactId>sisu-maven-plugin</artifactId>
-        <version>0.9.0.M2</version>
-        <executions>
-          <execution>
-            <id>generate-index</id>
-            <goals>
-              <goal>main-index</goal>
-              <goal>test-index</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
     </plugins>
   </build>
