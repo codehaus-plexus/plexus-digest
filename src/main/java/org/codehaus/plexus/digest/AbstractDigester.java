@@ -33,16 +33,27 @@ public abstract class AbstractDigester
 {
     private final StreamingDigester streamingDigester;
 
+    /**
+     * <p>Constructor for AbstractDigester.</p>
+     *
+     * @param streamingDigester a {@link org.codehaus.plexus.digest.StreamingDigester} object.
+     */
     protected AbstractDigester( StreamingDigester streamingDigester )
     {
         this.streamingDigester = streamingDigester;
     }
 
+    /**
+     * <p>getAlgorithm.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getAlgorithm()
     {
         return streamingDigester.getAlgorithm();
     }
 
+    /** {@inheritDoc} */
     public String calc( File file )
         throws DigesterException
     {
@@ -65,6 +76,7 @@ public abstract class AbstractDigester
         }
     }
 
+    /** {@inheritDoc} */
     public void verify( File file, String checksum )
         throws DigesterException
     {
@@ -79,6 +91,11 @@ public abstract class AbstractDigester
         }
     }
 
+    /**
+     * <p>toString.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String toString()
     {
         return "[Digester:" + streamingDigester.getAlgorithm() + "]";

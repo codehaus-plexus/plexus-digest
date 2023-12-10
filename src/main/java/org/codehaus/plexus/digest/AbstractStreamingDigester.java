@@ -33,6 +33,11 @@ public abstract class AbstractStreamingDigester
 
     private static final int BUFFER_SIZE = 32768;
 
+    /**
+     * <p>Constructor for AbstractStreamingDigester.</p>
+     *
+     * @param algorithm a {@link java.lang.String} object.
+     */
     protected AbstractStreamingDigester( String algorithm )
     {
         try
@@ -46,34 +51,64 @@ public abstract class AbstractStreamingDigester
         }
     }
 
+    /**
+     * <p>getAlgorithm.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getAlgorithm()
     {
         return md.getAlgorithm();
     }
 
+    /**
+     * <p>calc.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     * @throws org.codehaus.plexus.digest.DigesterException if any.
+     */
     public String calc()
         throws DigesterException
     {
         return calc( this.md );
     }
 
+    /**
+     * <p>reset.</p>
+     *
+     * @throws org.codehaus.plexus.digest.DigesterException if any.
+     */
     public void reset()
         throws DigesterException
     {
         md.reset();
     }
 
+    /** {@inheritDoc} */
     public void update( InputStream is )
         throws DigesterException
     {
         update( is, md );
     }
 
+    /**
+     * <p>calc.</p>
+     *
+     * @param md a {@link java.security.MessageDigest} object.
+     * @return a {@link java.lang.String} object.
+     */
     protected static String calc( MessageDigest md )
     {
         return Hex.encode( md.digest() );
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param is a {@link java.io.InputStream} object.
+     * @param digest a {@link java.security.MessageDigest} object.
+     * @throws org.codehaus.plexus.digest.DigesterException if any.
+     */
     protected static void update( InputStream is, MessageDigest digest )
         throws DigesterException
     {

@@ -25,6 +25,9 @@ package org.codehaus.plexus.digest;
 public class StreamingMd5Digester
     extends AbstractStreamingDigester
 {
+    /**
+     * <p>Constructor for StreamingMd5Digester.</p>
+     */
     public StreamingMd5Digester()
     {
         super( "MD5" );

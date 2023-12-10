@@ -25,6 +25,9 @@ package org.codehaus.plexus.digest;
 public class StreamingSha1Digester
     extends AbstractStreamingDigester
 {
+    /**
+     * <p>Constructor for StreamingSha1Digester.</p>
+     */
     public StreamingSha1Digester()
     {
         super( "SHA-1" );

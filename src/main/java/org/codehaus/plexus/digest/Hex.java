@@ -17,14 +17,19 @@ package org.codehaus.plexus.digest;
  */
 
 /**
- * Hex - simple hex conversions. 
+ * Hex - simple hex conversions.
  *
- * @version $Id$
  */
 public class Hex
 {
     private static final byte[] DIGITS = "0123456789abcdef".getBytes();
 
+    /**
+     * <p>encode.</p>
+     *
+     * @param data an array of {@link byte} objects.
+     * @return a {@link java.lang.String} object.
+     */
     public static String encode( byte[] data )
     {
         int l = data.length;
@@ -40,6 +45,12 @@ public class Hex
         return new String( raw );
     }
 
+    /**
+     * <p>encode.</p>
+     *
+     * @param raw a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String encode( String raw )
     {
         return encode( raw.getBytes() );
