@@ -23,15 +23,12 @@ import javax.inject.Named;
  *
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
  */
-@Named( "md5" )
-public class StreamingMd5Digester
-    extends AbstractStreamingDigester
-{
+@Named("md5")
+public class StreamingMd5Digester extends AbstractStreamingDigester {
     /**
      * <p>Constructor for StreamingMd5Digester.</p>
      */
-    public StreamingMd5Digester()
-    {
-        super( "MD5" );
+    public StreamingMd5Digester() {
+        super("MD5");
     }
 }

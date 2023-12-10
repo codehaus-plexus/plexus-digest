@@ -16,11 +16,12 @@ package org.codehaus.plexus.digest;
  * limitations under the License.
  */
 
+import javax.inject.Inject;
+
+import java.io.File;
+
 import org.codehaus.plexus.testing.PlexusTest;
 import org.junit.jupiter.api.Test;
-
-import javax.inject.Inject;
-import java.io.File;
 
 import static org.codehaus.plexus.testing.PlexusExtension.getBasedir;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -32,56 +33,50 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * @author <a href="mailto:joakim@erdfelt.com">Joakim Erdfelt</a>
  */
 @PlexusTest
-class ChecksumFileTest
-{
+class ChecksumFileTest {
     @Inject
     private ChecksumFile checksum;
 
     @Test
-    void isValidChecksum()
-        throws Exception
-    {
-        File exampleDir = new File( getBasedir(), "src/test/examples" );
+    void isValidChecksum() throws Exception {
+        File exampleDir = new File(getBasedir(), "src/test/examples");
 
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "redback-authz-open.jar.md5" ) ) );
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "redback-authz-open.jar.sha1" ) ) );
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "redback-authz-open.jar.sha256" ) ) );
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "redback-authz-open.jar.md5")));
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "redback-authz-open.jar.sha1")));
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "redback-authz-open.jar.sha256")));
 
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "plain.jar.md5" ) ) );
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "plain.jar.sha1" ) ) );
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "plain.jar.sha256" ) ) );
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "plain.jar.md5")));
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "plain.jar.sha1")));
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "plain.jar.sha256")));
 
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "single-space.jar.md5" ) ) );
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "single-space.jar.sha1" ) ) );
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "single-space.jar.sha256" ) ) );
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "single-space.jar.md5")));
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "single-space.jar.sha1")));
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "single-space.jar.sha256")));
 
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "space-asterisk.jar.md5" ) ) );
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "space-asterisk.jar.sha1" ) ) );
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "space-asterisk.jar.sha256" ) ) );
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "space-asterisk.jar.md5")));
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "space-asterisk.jar.sha1")));
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "space-asterisk.jar.sha256")));
 
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "openssl.jar.md5" ) ) );
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "openssl.jar.sha1" ) ) );
-        assertTrue( checksum.isValidChecksum( new File( exampleDir, "openssl.jar.sha256" ) ) );
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "openssl.jar.md5")));
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "openssl.jar.sha1")));
+        assertTrue(checksum.isValidChecksum(new File(exampleDir, "openssl.jar.sha256")));
     }
 
     @Test
-    void createChecksum()
-        throws Exception
-    {
-        File dataFile = File.createTempFile( "plexus-digest-test", null );
+    void createChecksum() throws Exception {
+        File dataFile = File.createTempFile("plexus-digest-test", null);
         dataFile.deleteOnExit();
 
-        File md5File = checksum.createChecksum( dataFile, new Md5Digester() );
+        File md5File = checksum.createChecksum(dataFile, new Md5Digester());
         md5File.deleteOnExit();
-        assertNotNull( md5File );
-        assertTrue( md5File.isFile() );
-        assertTrue( checksum.isValidChecksum( md5File ) );
+        assertNotNull(md5File);
+        assertTrue(md5File.isFile());
+        assertTrue(checksum.isValidChecksum(md5File));
 
-        File sha1File = checksum.createChecksum( dataFile, new Sha1Digester() );
+        File sha1File = checksum.createChecksum(dataFile, new Sha1Digester());
         sha1File.deleteOnExit();
-        assertNotNull( sha1File );
-        assertTrue( sha1File.isFile() );
-        assertTrue( checksum.isValidChecksum( sha1File ) );
+        assertNotNull(sha1File);
+        assertTrue(sha1File.isFile());
+        assertTrue(checksum.isValidChecksum(sha1File));
     }
-
 }

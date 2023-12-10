@@ -22,12 +22,9 @@ import javax.inject.Named;
  * An SHA-256 implementation of the streaming digester.
  *
  */
-@Named( "sha256" )
-public class StreamingSha256Digester
-    extends AbstractStreamingDigester
-{
-  public StreamingSha256Digester()
-  {
-    super( "SHA-256" );
-  }
+@Named("sha256")
+public class StreamingSha256Digester extends AbstractStreamingDigester {
+    public StreamingSha256Digester() {
+        super("SHA-256");
+    }
 }

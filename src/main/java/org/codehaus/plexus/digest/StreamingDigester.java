@@ -23,8 +23,7 @@ import java.io.InputStream;
  *
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
  */
-public interface StreamingDigester
-{
+public interface StreamingDigester {
     /** Constant <code>ROLE="StreamingDigester.class.getName()"</code> */
     String ROLE = StreamingDigester.class.getName();
 
@@ -41,8 +40,7 @@ public interface StreamingDigester
      *
      * @throws org.codehaus.plexus.digest.DigesterException if there was a problem with the internal message digest
      */
-    void reset()
-        throws DigesterException;
+    void reset() throws DigesterException;
 
     /**
      * Calculate the current checksum.
@@ -50,8 +48,7 @@ public interface StreamingDigester
      * @return the current checksum.
      * @throws org.codehaus.plexus.digest.DigesterException if there was a problem computing the hashcode.
      */
-    String calc()
-        throws DigesterException;
+    String calc() throws DigesterException;
 
     /**
      * Update the checksum with the content of the input stream.
@@ -59,7 +56,5 @@ public interface StreamingDigester
      * @param is the input stream
      * @throws org.codehaus.plexus.digest.DigesterException if there was a problem computing the hashcode.
      */
-    void update( InputStream is )
-        throws DigesterException;
-
+    void update(InputStream is) throws DigesterException;
 }

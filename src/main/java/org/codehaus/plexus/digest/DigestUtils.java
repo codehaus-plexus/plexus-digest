@@ -24,10 +24,8 @@ import java.util.regex.Pattern;
  *
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
  */
-public class DigestUtils
-{
-    private DigestUtils()
-    {
+public class DigestUtils {
+    private DigestUtils() {
         // don't create this class
     }
 
@@ -41,9 +39,9 @@ public class DigestUtils
      * @throws org.codehaus.plexus.digest.DigesterException if there was a problem verifying the checksum string.
      * @param expectedFilename a {@link java.lang.String} object.
      */
-    public static String cleanChecksum( String rawChecksum, Digester digester, String expectedFilename ) throws DigesterException
-    {
-        return cleanChecksum( rawChecksum, digester.getAlgorithm(), expectedFilename );
+    public static String cleanChecksum(String rawChecksum, Digester digester, String expectedFilename)
+            throws DigesterException {
+        return cleanChecksum(rawChecksum, digester.getAlgorithm(), expectedFilename);
     }
 
     /**
@@ -55,42 +53,33 @@ public class DigestUtils
      * @return a {@link java.lang.String} object.
      * @throws org.codehaus.plexus.digest.DigesterException if any.
      */
-    public static String cleanChecksum( String checksum, String algorithm, String path )
-        throws DigesterException
-    {
-        String trimmedChecksum = checksum.replace( '\n', ' ' ).trim();
+    public static String cleanChecksum(String checksum, String algorithm, String path) throws DigesterException {
+        String trimmedChecksum = checksum.replace('\n', ' ').trim();
 
         // Free-BSD / openssl
-        String regex = algorithm.replaceAll( "-", "" ) + "\\s*\\((.*?)\\)\\s*=\\s*([a-fA-F0-9]+)";
-        Matcher m = Pattern.compile( regex ).matcher( trimmedChecksum );
-        if ( m.matches() )
-        {
-            String filename = m.group( 1 );
-            if ( !isValidChecksumPattern( filename, path ) )
-            {
-                throw new DigesterException( "Supplied checksum does not match checksum pattern" );
+        String regex = algorithm.replaceAll("-", "") + "\\s*\\((.*?)\\)\\s*=\\s*([a-fA-F0-9]+)";
+        Matcher m = Pattern.compile(regex).matcher(trimmedChecksum);
+        if (m.matches()) {
+            String filename = m.group(1);
+            if (!isValidChecksumPattern(filename, path)) {
+                throw new DigesterException("Supplied checksum does not match checksum pattern");
             }
-            trimmedChecksum = m.group( 2 );
-        }
-        else
-        {
+            trimmedChecksum = m.group(2);
+        } else {
             // GNU tools
-            m = Pattern.compile( "([a-fA-F0-9]+)\\s+\\*?(.+)" ).matcher( trimmedChecksum );
-            if ( m.matches() )
-            {
-                String filename = m.group( 2 );
-                if ( !isValidChecksumPattern( filename, path ) )
-                {
-                    throw new DigesterException( "Supplied checksum does not match checksum pattern" );
+            m = Pattern.compile("([a-fA-F0-9]+)\\s+\\*?(.+)").matcher(trimmedChecksum);
+            if (m.matches()) {
+                String filename = m.group(2);
+                if (!isValidChecksumPattern(filename, path)) {
+                    throw new DigesterException("Supplied checksum does not match checksum pattern");
                 }
-                trimmedChecksum = m.group( 1 );
+                trimmedChecksum = m.group(1);
             }
         }
         return trimmedChecksum;
     }
 
-    private static boolean isValidChecksumPattern( String filename, String path )
-    {
-        return filename.endsWith( path ) || ( "-".equals( filename ) );
+    private static boolean isValidChecksumPattern(String filename, String path) {
+        return filename.endsWith(path) || ("-".equals(filename));
     }
 }

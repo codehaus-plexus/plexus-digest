@@ -20,38 +20,30 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class DigestUtilsTest
-{
+class DigestUtilsTest {
     /**  SHA1 checksum from www.ibiblio.org/maven2, incuding file path */
     private static final String SERVLETAPI_SHA1 = "bcc82975c0f9c681fcb01cc38504c992553e93ba";
 
     @Test
-    void cleanChecksum()
-        throws DigesterException
-    {
+    void cleanChecksum() throws DigesterException {
         String expected = SERVLETAPI_SHA1
-            + "  /home/projects/maven/repository-staging/to-ibiblio/maven2/servletapi/servletapi/2.4/servletapi-2.4.pom";
+                + "  /home/projects/maven/repository-staging/to-ibiblio/maven2/servletapi/servletapi/2.4/servletapi-2.4.pom";
 
-        String s = DigestUtils.cleanChecksum( expected, "SHA1", "servletapi/servletapi/2.4/servletapi-2.4.pom" );
-        assertEquals( SERVLETAPI_SHA1, s, "Checksum doesn't match" );
-
+        String s = DigestUtils.cleanChecksum(expected, "SHA1", "servletapi/servletapi/2.4/servletapi-2.4.pom");
+        assertEquals(SERVLETAPI_SHA1, s, "Checksum doesn't match");
     }
 
     @Test
-    void cleanChecksumAltDash1()
-        throws DigesterException
-    {
+    void cleanChecksumAltDash1() throws DigesterException {
         String expected = SERVLETAPI_SHA1 + "  -";
-        String s = DigestUtils.cleanChecksum( expected, "SHA1", "servletapi/servletapi/2.4/servletapi-2.4.pom" );
-        assertEquals( SERVLETAPI_SHA1, s, "Checksum doesn't match" );
+        String s = DigestUtils.cleanChecksum(expected, "SHA1", "servletapi/servletapi/2.4/servletapi-2.4.pom");
+        assertEquals(SERVLETAPI_SHA1, s, "Checksum doesn't match");
     }
 
     @Test
-    void cleanChecksumAltDash2()
-        throws DigesterException
-    {
+    void cleanChecksumAltDash2() throws DigesterException {
         String expected = "SHA1(-)=" + SERVLETAPI_SHA1;
-        String s = DigestUtils.cleanChecksum( expected, "SHA1", "servletapi/servletapi/2.4/servletapi-2.4.pom" );
-        assertEquals( SERVLETAPI_SHA1, s, "Checksum doesn't match" );
+        String s = DigestUtils.cleanChecksum(expected, "SHA1", "servletapi/servletapi/2.4/servletapi-2.4.pom");
+        assertEquals(SERVLETAPI_SHA1, s, "Checksum doesn't match");
     }
 }
