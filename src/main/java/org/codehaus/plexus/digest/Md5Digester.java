@@ -16,11 +16,13 @@ package org.codehaus.plexus.digest;
  * limitations under the License.
  */
 
+import javax.inject.Named;
+
 /**
  * Digester that does MD5 Message Digesting Only.
  *
- * @plexus.component role="org.codehaus.plexus.digest.Digester" role-hint="md5"
  */
+@Named( "md5" )
 public class Md5Digester
     extends AbstractDigester
 {

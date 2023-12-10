@@ -16,12 +16,14 @@ package org.codehaus.plexus.digest;
  * limitations under the License.
  */
 
+import javax.inject.Named;
+
 /**
  * An SHA-1 implementation of the streaming digester.
  *
  * @author <a href="mailto:brett@apache.org">Brett Porter</a>
- * @plexus.component role="org.codehaus.plexus.digest.StreamingDigester" role-hint="sha1"
  */
+@Named( "sha1" )
 public class StreamingSha1Digester
     extends AbstractStreamingDigester
 {

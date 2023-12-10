@@ -16,38 +16,42 @@ package org.codehaus.plexus.digest;
  * limitations under the License.
  */
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
 
-public class DigestUtilsTest
-    extends TestCase
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class DigestUtilsTest
 {
     /**  SHA1 checksum from www.ibiblio.org/maven2, incuding file path */
     private static final String SERVLETAPI_SHA1 = "bcc82975c0f9c681fcb01cc38504c992553e93ba";
 
-    public void testCleanChecksum()
+    @Test
+    void cleanChecksum()
         throws DigesterException
     {
         String expected = SERVLETAPI_SHA1
             + "  /home/projects/maven/repository-staging/to-ibiblio/maven2/servletapi/servletapi/2.4/servletapi-2.4.pom";
 
         String s = DigestUtils.cleanChecksum( expected, "SHA1", "servletapi/servletapi/2.4/servletapi-2.4.pom" );
-        assertEquals( "Checksum doesn't match", SERVLETAPI_SHA1, s );
+        assertEquals( SERVLETAPI_SHA1, s, "Checksum doesn't match" );
 
     }
 
-    public void testCleanChecksumAltDash1()
+    @Test
+    void cleanChecksumAltDash1()
         throws DigesterException
     {
         String expected = SERVLETAPI_SHA1 + "  -";
         String s = DigestUtils.cleanChecksum( expected, "SHA1", "servletapi/servletapi/2.4/servletapi-2.4.pom" );
-        assertEquals( "Checksum doesn't match", SERVLETAPI_SHA1, s );
+        assertEquals( SERVLETAPI_SHA1, s, "Checksum doesn't match" );
     }
 
-    public void testCleanChecksumAltDash2()
+    @Test
+    void cleanChecksumAltDash2()
         throws DigesterException
     {
         String expected = "SHA1(-)=" + SERVLETAPI_SHA1;
         String s = DigestUtils.cleanChecksum( expected, "SHA1", "servletapi/servletapi/2.4/servletapi-2.4.pom" );
-        assertEquals( "Checksum doesn't match", SERVLETAPI_SHA1, s );
+        assertEquals( SERVLETAPI_SHA1, s, "Checksum doesn't match" );
     }
 }
