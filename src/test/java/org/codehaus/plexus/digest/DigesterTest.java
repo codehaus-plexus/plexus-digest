@@ -19,8 +19,6 @@ package org.codehaus.plexus.digest;
 import org.codehaus.plexus.PlexusTestCase;
 
 import java.io.File;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * Test the digester.
@@ -55,9 +53,7 @@ public class DigesterTest
         assertEquals( "MD5", md5Digest.getAlgorithm() );
     }
 
-    public void testBareDigestFormat()
-        throws DigesterException, IOException
-    {
+    public void testBareDigestFormat() {
         File file = new File( getClass().getResource( "/test-file.txt" ).getPath() );
 
         try
@@ -89,9 +85,7 @@ public class DigesterTest
         }
     }
 
-    public void testOpensslDigestFormat()
-        throws IOException, DigesterException
-    {
+    public void testOpensslDigestFormat() {
         File file = new File( getClass().getResource( "/test-file.txt" ).getPath() );
 
         try
@@ -151,9 +145,7 @@ public class DigesterTest
         }
     }
 
-    public void testGnuDigestFormat()
-        throws NoSuchAlgorithmException, IOException, DigesterException
-    {
+    public void testGnuDigestFormat() {
         File file = new File( getClass().getResource( "/test-file.txt" ).getPath() );
 
         try
@@ -213,9 +205,7 @@ public class DigesterTest
         }
     }
 
-    public void testUntrimmedContent()
-        throws NoSuchAlgorithmException, IOException
-    {
+    public void testUntrimmedContent() {
         File file = new File( getClass().getResource( "/test-file.txt" ).getPath() );
         try
         {
